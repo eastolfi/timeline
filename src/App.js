@@ -7,7 +7,8 @@ import { buildTimeline } from './utils/timeline.utils';
 import { convertFromString, isSameDate, parseDate } from './utils/date.utils';
 
 const events = [
-  { date: parseDate(2022, 2, 1), contenido: { title: 'Pruebas' } }
+  { date: parseDate(2022, 2, 1), contenido: { title: 'Pruebas' } },
+  { date: parseDate(2022, 2, 2), contenido: { title: 'Pruebas 2' } }
 ]
 
 function App() {
@@ -70,10 +71,11 @@ function App() {
     {selectAnio === "" || selectMes === "" ? <h3>Selecciona mes y año</h3> :
       <div className='scrollmenu'>
         <ul className=''>{
-          timeLine.map((line) => (
+          timeLine.map((line, index) => (
             <TimeLine
                 line={line}
                 key={line.date}
+                esImpar={ index % 2 === 0 }
                 onNewLineAdded={onNewLineAdded}
               />
           ))}

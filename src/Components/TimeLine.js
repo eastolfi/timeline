@@ -1,7 +1,8 @@
 import { useState } from "react"
 import { Agregar } from './Agregar';
+import styles from './TimeLine.module.css'
 
-function TimeLine({ line, onNewLineAdded }) {
+function TimeLine({ line, onNewLineAdded, esImpar }) {
    const title = line.contenido?.title || '';
    let [isOpen, setIsOpen] = useState(false)
 
@@ -10,8 +11,14 @@ function TimeLine({ line, onNewLineAdded }) {
    }
 
    return (<>
-      <li className="container">
-         <button className="open-modal" onClick={() => (mostrar(true))}><h3>{line.date} - {title}</h3></button>
+      <li className="container" style={{ display: 'flex', flexDirection: 'column' }}>
+         <button className="open-modal" onClick={() => (mostrar(true))} style={{ order: esImpar ? 1 : 2 }}>
+            <h3>{line.date}</h3>
+         </button>
+         
+         <ol className={ styles.EventList } style={{ order: esImpar ? 2 : 1 }}>
+            <li>{ title }</li>
+         </ol>
       </li>
       
       <Agregar
