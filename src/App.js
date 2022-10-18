@@ -108,16 +108,14 @@ function App() {
     {selectAnio === "" || selectMes === "" ? <h3>Selecciona mes y año</h3> :
       <div className='scrollmenu'>
         <ul className=''>{
-          timeLine.map((line) => {
-            return (<>
-              <TimeLine
+          timeLine.map((line) => (
+            <TimeLine
                 line={line}
                 key={line.date}
                 setNewLine={setNewLine}
                 newLine={newLine}
               />
-            </>)
-          })}
+          ))}
         </ul>
       </div>
     }

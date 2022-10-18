@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-function TimeLine({ key, line, setNewLine, newLine }) {
+function TimeLine({ line, setNewLine, newLine }) {
 
    let [image, setImage] = useState("")
    let [headingText, setHeadingText] = useState("")
@@ -33,13 +33,13 @@ function TimeLine({ key, line, setNewLine, newLine }) {
 
    if (isOpen) {
       return (<>
-         <li key={key} className="container">
+         <li className="container">
             <button className="open-modal" value={line.date} onClick={() => (mostrar(true))}><h3>{line.date}</h3></button>
          </li>
 
          {/*---------------------------------------------------------------------------------- agregar---------------------------------------------------------------------------------- */}
 
-         <div key={key} className="modal is-open" id="modal1" onClick={() => (mostrar(false))}>
+         <div className="modal is-open" id="modal1" onClick={() => (mostrar(false))}>
             <div className="modal-dialog" onClick={(e)=>e.stopPropagation()}>
                <div className="formulario modal-container">
                   <button className="close-modal" aria-label="close modal" onClick={() => (mostrar(false))} data-close>✕</button>
@@ -67,7 +67,7 @@ function TimeLine({ key, line, setNewLine, newLine }) {
       )
    } else {
       return (
-         <li key={key} className="container">
+         <li className="container">
             <button className="open-modal" value={line.date} onClick={() => (mostrar(true))}><h3>{line.date}</h3></button>
          </li>
       )
