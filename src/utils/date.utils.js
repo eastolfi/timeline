@@ -21,6 +21,17 @@ export function parseDateAsString(year, month, day) {
 export function parseDate(year, month, day) {
     return new Date(year, month - 1, day);
 }
+
+/**
+ * Convierte una fecha en formato DD/MM/YYYY a {Date}
+ * 
+ * @param {string} date Fecha a convertir
+ * @returns La fecha en formato {Date}
+ */
+export function convertFromString(date) {
+    const fields = date.split('/')
+    return new Date(parseInt(fields[2]), parseInt(fields[1]) - 1, parseInt(fields[0]))
+}
  
 /**
  * Comprueba que las dos fechas son las mismas

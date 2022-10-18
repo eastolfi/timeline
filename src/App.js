@@ -4,7 +4,7 @@ import TimeLine from './Components/TimeLine';
 import { Select } from './Components/Select';
 import { Agregar } from './Components/Agregar';
 import { buildTimeline } from './utils/timeline.utils';
-import { parseDate } from './utils/date.utils';
+import { convertFromString, isSameDate, parseDate } from './utils/date.utils';
 
 const events = [
   { date: parseDate(2022, 2, 1), contenido: { title: 'Pruebas' } }
@@ -12,7 +12,6 @@ const events = [
 
 function App() {
   let [timeLine, setTimeLine] = useState([])
-  let [newLine, setNewLine] = useState([])
   let [selectAnio, setSelectAnio] = useState(2022)
   let [selectMes, setSelectMes] = useState(2)
   let [start, setStart] = useState(1989)
@@ -24,50 +23,25 @@ function App() {
     setTimeLine(buildTimeline(selectAnio, selectMes, events))
   }, [selectAnio, selectMes])
 
-  /* useEffect(() => {
-    if (newLine.length > 0 || newLine.length < 0) {
-      let array = [...timeLine]
-      newLine.map((evento) => {
-        array.forEach(dia => {
-          if (dia.date === evento.date) {
-            array.contenido = {
-              imagenUrl: evento.contenido.imagenUrl,
-              headingText: evento.contenido.headingText,
-              description: evento.contenido.description
-            }
-          }
-        }
-        }
-      setTimeLine(array)
-      }
-  }, [newLine]) */
-
   /* -------------------------------------Agrega el evento al dia------------------------------------- */
 
-  useEffect(() => {
-    console.log('new line effect')
-    if (newLine.length > 0) {
-      let array = [...timeLine]
-      if (newLine.length > 0 || newLine.length < 0) {
-
-        newLine.forEach(evento => {
-          array.forEach(dia => {
-
-            if (evento.date === dia.date) {
-              if (evento.contenido === dia.contenido) {
-                console.log("es el mismo")
-              } else if (dia.contenido.length > 0) {
-                dia.contenido.push(evento.contenido)
-              } else {
-                dia.contenido = [evento.contenido]
-              }
-            }
-          })
-        })
+  /**
+   * Esta funcion se llama al añadir un nuevo evento
+   * 
+   * @param {Evento} line Linea con el evento que se acaba de incluir
+   */
+  function onNewLineAdded(line) {
+    events.push(line)
+    
+    // setTimeLine(buildTimeline(selectAnio, selectMes, events))
+    setTimeLine((old) => old.map(item => {
+      if (isSameDate(convertFromString(item.date), line.date)) {
+        // cambiar a varios eventos
+        item.contenido = line.contenido
       }
-      setTimeLine(array)
-    }
-  }, [newLine])
+      return item
+    }))
+  }
 
   function mostrar(bool) {
     return isOpen ? setIsOpen(bool) : setIsOpen(bool)
@@ -87,10 +61,9 @@ function App() {
       />
       <button className="open-modal" onClick={() => (mostrar(true))}><h3>Agregar evento</h3></button>
       <Agregar
-        newLine={newLine}
-        setNewLine={setNewLine}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
+        onNewLineAdded={onNewLineAdded}
         mostrarF={() => (mostrar(false))}
       />
     </header>
@@ -101,9 +74,7 @@ function App() {
             <TimeLine
                 line={line}
                 key={line.date}
-                
-                setNewLine={setNewLine}
-                newLine={newLine}
+                onNewLineAdded={onNewLineAdded}
               />
           ))}
         </ul>

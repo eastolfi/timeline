@@ -1,78 +1,26 @@
 import { useState } from "react"
+import { Agregar } from './Agregar';
 
-function TimeLine({ line, setNewLine, newLine }) {
-
-   let [image, setImage] = useState("")
-   let [headingText, setHeadingText] = useState(line.contenido?.title ? (line.contenido.title) : '/')
-   let [description, setDescription] = useState("")
+function TimeLine({ line, onNewLineAdded }) {
+   const title = line.contenido?.title || '';
    let [isOpen, setIsOpen] = useState(false)
-
-   console.log(line)
-
-   function guardar() {
-      let array = [...newLine]
-      if (image !== "" && headingText !== "" && description !== "") {
-         array.push({
-            date: line.date,
-            contenido: {
-               imagenUrl: image,
-               headingText: headingText,
-               description: description
-            }
-         })
-      }
-      setNewLine(array)
-      setImage("")
-      setHeadingText("")
-      setDescription("")
-      setIsOpen(false)
-   }
 
    function mostrar(bool) {
       return isOpen ? setIsOpen(bool) : setIsOpen(bool)
    }
 
-
-   if (isOpen) {
-      return (<>
-         <li className="container">
-            <button className="open-modal" value={line.date} onClick={() => (mostrar(true))}><h3>{line.date}</h3></button>
-         </li>
-
-         {/*---------------------------------------------------------------------------------- agregar---------------------------------------------------------------------------------- */}
-
-         <div className="modal is-open" id="modal1" onClick={() => (mostrar(false))}>
-            <div className="modal-dialog" onClick={(e)=>e.stopPropagation()}>
-               <div className="formulario modal-container">
-                  <button className="close-modal" aria-label="close modal" onClick={() => (mostrar(false))} data-close>✕</button>
-                  <h2>{line.date}</h2>
-                  <label>Imagen</label>
-                  <input
-                     required
-                     value={image}
-                     onChange={(e) => (setImage((e.target.value)))} />
-                  <label>headingText</label>
-                  <input
-                     required
-                     value={headingText}
-                     onChange={(e) => (setHeadingText((e.target.value)))} />
-                  <label>description</label>
-                  <input
-                     required
-                     value={description}
-                     onChange={(e) => (setDescription((e.target.value)))} />
-                  <button onClick={() => guardar()}>Guardar</button>
-               </div>
-            </div>
-         </div>
-      </>
-      )
-   } else {
-      return (
-         <li className="container">
-            <button className="open-modal" value={line.date} onClick={() => (mostrar(true))}><h3>{line.date} - {headingText}</h3></button>
-         </li>
-      )
-   }
+   return (<>
+      <li className="container">
+         <button className="open-modal" onClick={() => (mostrar(true))}><h3>{line.date} - {title}</h3></button>
+      </li>
+      
+      <Agregar
+        line={line}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        onNewLineAdded={onNewLineAdded}
+        mostrarF={() => (mostrar(false))}
+      />
+   </>)
 }
 export default TimeLine
