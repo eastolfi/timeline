@@ -2,8 +2,13 @@ import './App.css';
 import { useState, useEffect } from "react"
 import TimeLine from './Components/TimeLine';
 import { Select } from './Components/Select';
-import { Cards } from './Components/Cards';
 import { Agregar } from './Components/Agregar';
+import { buildTimeline } from './utils/timeline.utils';
+import { parseDate } from './utils/date.utils';
+
+const events = [
+  { date: parseDate(2022, 2, 1), contenido: { title: 'Pruebas' } }
+]
 
 function App() {
   let [timeLine, setTimeLine] = useState([])
@@ -15,19 +20,8 @@ function App() {
 
   /* -------------------------------------Crea la linea de tiempo------------------------------------- */
   useEffect(() => {
-    let array = []
-    let diasMes = new Date(selectAnio, selectMes, 0).getDate()
-    for (let dia = 1; dia <= diasMes; dia++) {
-      array.push({
-        date: `${dia <= 9 ? "0" : ""}${dia}/${selectMes <= 9 ? "0" : ""}${selectMes}/${selectAnio}`,
-        contenido: {
-          imagenUrl: "",
-          headingText: "",
-          description: ""
-        }
-      })
-    }
-    setTimeLine(array)
+    console.log('select effect')
+    setTimeLine(buildTimeline(selectAnio, selectMes, events))
   }, [selectAnio, selectMes])
 
   /* useEffect(() => {
@@ -51,6 +45,7 @@ function App() {
   /* -------------------------------------Agrega el evento al dia------------------------------------- */
 
   useEffect(() => {
+    console.log('new line effect')
     if (newLine.length > 0) {
       let array = [...timeLine]
       if (newLine.length > 0 || newLine.length < 0) {
@@ -72,13 +67,7 @@ function App() {
       }
       setTimeLine(array)
     }
-
-
-
   }, [newLine])
-
-
-
 
   function mostrar(bool) {
     return isOpen ? setIsOpen(bool) : setIsOpen(bool)
@@ -112,6 +101,7 @@ function App() {
             <TimeLine
                 line={line}
                 key={line.date}
+                
                 setNewLine={setNewLine}
                 newLine={newLine}
               />

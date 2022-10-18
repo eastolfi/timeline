@@ -3,9 +3,11 @@ import { useState } from "react"
 function TimeLine({ line, setNewLine, newLine }) {
 
    let [image, setImage] = useState("")
-   let [headingText, setHeadingText] = useState("")
+   let [headingText, setHeadingText] = useState(line.contenido?.title ? (line.contenido.title) : '/')
    let [description, setDescription] = useState("")
    let [isOpen, setIsOpen] = useState(false)
+
+   console.log(line)
 
    function guardar() {
       let array = [...newLine]
@@ -68,7 +70,7 @@ function TimeLine({ line, setNewLine, newLine }) {
    } else {
       return (
          <li className="container">
-            <button className="open-modal" value={line.date} onClick={() => (mostrar(true))}><h3>{line.date}</h3></button>
+            <button className="open-modal" value={line.date} onClick={() => (mostrar(true))}><h3>{line.date} - {headingText}</h3></button>
          </li>
       )
    }
