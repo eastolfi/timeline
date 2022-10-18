@@ -4,9 +4,9 @@ import { convertFromString } from '../utils/date.utils'
 export function Agregar({ line, setIsOpen, isOpen, mostrarF, onNewLineAdded }) {
    const isNew = !line?.date
 
-   let [fecha, setFecha] = useState(line?.date || "03/02/2022")
+   let [fecha, setFecha] = useState(line?.date)
    let [image, setImage] = useState("")
-   let [headingText, setHeadingText] = useState("Pruebas")
+   let [headingText, setHeadingText] = useState("")
    let [description, setDescription] = useState("")
 
    function guardar() {

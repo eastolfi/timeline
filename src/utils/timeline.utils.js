@@ -1,4 +1,4 @@
-import { isSameDate, parseDate, parseDateAsString } from "./date.utils"
+import { convertFromString, isSameDate, parseDate, parseDateAsString } from "./date.utils"
 
 /**
  * Construye una timeline para un mes/anio con los eventos correspondientes
@@ -14,11 +14,11 @@ export function buildTimeline(year, month, events) {
 
     for (let dia = 1; dia <= diasMes; dia++) {
       const currentDate = parseDate(year, month, dia);
-      let contenido = {}
+      let contenido = []
 
       events.forEach(event => {
         if (isSameDate(event.date, currentDate)) {
-          contenido = event.contenido;
+          contenido.push(event.contenido);
         }
       })
 
@@ -29,4 +29,18 @@ export function buildTimeline(year, month, events) {
     }
 
     return timeline
+}
+
+export function addEventToTimeline(event, timeline) {
+  return timeline.map(item => {
+    if (isSameDate(convertFromString(item.date), event.date)) {
+      if (!item.contenido) {
+        item.contenido = []
+      }
+
+      item.contenido.push(event.contenido)
+    }
+
+    return item
+  })
 }

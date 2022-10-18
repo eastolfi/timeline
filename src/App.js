@@ -3,11 +3,12 @@ import { useState, useEffect } from "react"
 import TimeLine from './Components/TimeLine';
 import { Select } from './Components/Select';
 import { Agregar } from './Components/Agregar';
-import { buildTimeline } from './utils/timeline.utils';
-import { convertFromString, isSameDate, parseDate } from './utils/date.utils';
+import { addEventToTimeline, buildTimeline } from './utils/timeline.utils';
+import { parseDate } from './utils/date.utils';
 
 const events = [
   { date: parseDate(2022, 2, 1), contenido: { title: 'Pruebas' } },
+  { date: parseDate(2022, 2, 1), contenido: { title: 'Más pruebas' } },
   { date: parseDate(2022, 2, 2), contenido: { title: 'Pruebas 2' } }
 ]
 
@@ -35,13 +36,7 @@ function App() {
     events.push(line)
     
     // setTimeLine(buildTimeline(selectAnio, selectMes, events))
-    setTimeLine((old) => old.map(item => {
-      if (isSameDate(convertFromString(item.date), line.date)) {
-        // cambiar a varios eventos
-        item.contenido = line.contenido
-      }
-      return item
-    }))
+    setTimeLine(old => addEventToTimeline(line, old))
   }
 
   function mostrar(bool) {

@@ -3,12 +3,13 @@ import { Agregar } from './Agregar';
 import styles from './TimeLine.module.css'
 
 function TimeLine({ line, onNewLineAdded, esImpar }) {
-   const title = line.contenido?.title || '';
    let [isOpen, setIsOpen] = useState(false)
 
    function mostrar(bool) {
       return isOpen ? setIsOpen(bool) : setIsOpen(bool)
    }
+   
+   const { contenido } = line;
 
    return (<>
       <li className="container" style={{ display: 'flex', flexDirection: 'column' }}>
@@ -17,7 +18,9 @@ function TimeLine({ line, onNewLineAdded, esImpar }) {
          </button>
          
          <ol className={ styles.EventList } style={{ order: esImpar ? 2 : 1 }}>
-            <li>{ title }</li>
+            {contenido.map(({ title }, i) => (
+               <li key={i}>{ title }</li>
+            ))}
          </ol>
       </li>
       
