@@ -1,0 +1,6 @@
+.EventList {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    padding-left: 15px;
+}

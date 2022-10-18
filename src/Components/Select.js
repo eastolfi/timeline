@@ -31,10 +31,10 @@ export function Select({ setSelectAnio, setSelectMes, selectMes, selectAnio, sta
    return (
       <div className="options">
          <div>
-            <select onChange={(e) => (setSelectMes(e.target.value))}>
-               <option selected>Selecciona un mes</option>
+            <select value={selectMes} onChange={(e) => (setSelectMes(e.target.value))}>
+               <option value=''>Selecciona un mes</option>
                {meses.map((mes) => {
-                  return <option value={mes.value}>{mes.text}</option>
+                  return <option key={mes.value} value={mes.value}>{mes.text}</option>
                })}
 
             </select>
@@ -42,10 +42,10 @@ export function Select({ setSelectAnio, setSelectMes, selectMes, selectAnio, sta
          </div>
          <div>
             <div>
-               <select onChange={(e) => (setSelectAnio(e.target.value))}>
-                  <option selected>Selecciona un año</option>
+               <select value={selectAnio} onChange={(e) => (setSelectAnio(e.target.value))}>
+                  <option value=''>Selecciona un año</option>
                   {anios.map((anio) => {
-                     return <option value={anio}>{anio}</option>
+                     return <option key={anio} value={anio}>{anio}</option>
                   })}
 
                </select>
