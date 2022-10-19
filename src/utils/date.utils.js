@@ -36,12 +36,15 @@ export function convertFromString(date) {
 /**
  * Comprueba que las dos fechas son las mismas
  * 
- * @param {Date} first Primera fecha
- * @param {Date} second Segunda fecha
+ * @param {Date|string} first Primera fecha
+ * @param {Date|string} second Segunda fecha
  * @returns Si es la misma fecha o no
  */
-export function isSameDate(first/*Date*/, second/*Date*/) {
-    return first.getFullYear() === second.getFullYear() &&
-        first.getMonth() === second.getMonth() &&
-        first.getDate() === second.getDate();
+export function isSameDate(first/*Date | string*/, second/*Date | string*/) {
+    const firstDate = (typeof first === 'string') ? convertFromString(first) : first
+    const secondDate = (typeof second === 'string') ? convertFromString(second) : second
+
+    return firstDate.getFullYear() === secondDate.getFullYear() &&
+        firstDate.getMonth() === secondDate.getMonth() &&
+        firstDate.getDate() === secondDate.getDate();
 }

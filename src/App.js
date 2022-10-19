@@ -1,9 +1,11 @@
 import './App.css';
 import { useState, useEffect } from "react"
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 import TimeLine from './Components/TimeLine';
 import { Select } from './Components/Select';
 import { Agregar } from './Components/Agregar';
-import { addEventToTimeline, buildTimeline } from './utils/timeline.utils';
+import { addEventToTimeline, buildTimeline, moveEvent } from './utils/timeline.utils';
 import { parseDate } from './utils/date.utils';
 
 const events = [
@@ -39,12 +41,16 @@ function App() {
     setTimeLine(old => addEventToTimeline(line, old))
   }
 
+  function onEventMoved(from, to, event) {
+    setTimeLine(old => moveEvent(from, to, event, old))
+  }
+
   function mostrar(bool) {
     return isOpen ? setIsOpen(bool) : setIsOpen(bool)
   }
 
 
-  return (<>
+  return (<DndProvider backend={HTML5Backend}>
     <header >
       <h1 className='titulo'>LA LINEA DE TU VIDAAAA</h1>
       <input placeholder='Año de nacimiento' onChange={(e) => (setStart(e.target.value))} />
@@ -72,6 +78,7 @@ function App() {
                 key={line.date}
                 esImpar={ index % 2 === 0 }
                 onNewLineAdded={onNewLineAdded}
+                onEventMoved={onEventMoved}
               />
           ))}
         </ul>
@@ -89,7 +96,7 @@ function App() {
     </div> */}
 
 
-  </>);
+  </DndProvider>);
 }
 
 export default App;
