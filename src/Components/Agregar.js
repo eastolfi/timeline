@@ -4,14 +4,14 @@ import { convertFromString } from '../utils/date.utils'
 export function Agregar({ line, setIsOpen, isOpen, mostrarF, onNewLineAdded }) {
    const isNew = !line?.date
 
-   let [fecha, setFecha] = useState(line?.date)
+   let [fecha, setFecha] = useState("")
    let [image, setImage] = useState("")
    let [headingText, setHeadingText] = useState("")
    let [description, setDescription] = useState("")
 
    function guardar() {
       onNewLineAdded({
-         date: convertFromString(fecha),
+         date: convertFromString(isNew ? fecha : line?.date),
          contenido: {
             imagenUrl: image,
             title: headingText,
