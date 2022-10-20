@@ -1,9 +1,11 @@
 import './App.css';
 import { useState, useEffect } from "react"
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 import TimeLine from './Components/TimeLine';
 import { Select } from './Components/Select';
 import { Agregar } from './Components/Agregar';
-import { addEventToTimeline, buildTimeline } from './utils/timeline.utils';
+import { addEventToTimeline, buildTimeline, moveEvent } from './utils/timeline.utils';
 import { parseDate } from './utils/date.utils';
 
 const events = [
@@ -34,9 +36,13 @@ function App() {
    */
   function onNewLineAdded(line) {
     events.push(line)
-    
+
     // setTimeLine(buildTimeline(selectAnio, selectMes, events))
     setTimeLine(old => addEventToTimeline(line, old))
+  }
+
+  function onEventMoved(from, to, event) {
+    setTimeLine(old => moveEvent(from, to, event, old))
   }
 
   function mostrar(bool) {
@@ -44,7 +50,7 @@ function App() {
   }
 
 
-  return (<>
+  return (<DndProvider backend={HTML5Backend}>
     <header >
       <h1 className='titulo'>LA LINEA DE TU VIDAAAA</h1>
       <input placeholder='Año de nacimiento' onChange={(e) => (setStart(e.target.value))} />
@@ -68,28 +74,16 @@ function App() {
         <ul className=''>{
           timeLine.map((line, index) => (
             <TimeLine
-                line={line}
-                key={line.date}
-                esImpar={ index % 2 === 0 }
-                onNewLineAdded={onNewLineAdded}
-              />
+              line={line}
+              key={line.date}
+              onNewLineAdded={onNewLineAdded}
+              onEventMoved={onEventMoved}
+            />
           ))}
         </ul>
       </div>
     }
-    {/* <div className='scrollmenu'>
-      <ul className=''>{
-        newLine.map((line) => {
-          return (
-            <Cards line={line} />
-
-          )
-        })}
-      </ul>
-    </div> */}
-
-
-  </>);
+  </DndProvider>);
 }
 
 export default App;
