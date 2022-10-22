@@ -14,13 +14,16 @@ export function buildTimeline(year, month, events) {
 
   for (let dia = 1; dia <= diasMes; dia++) {
     const currentDate = parseDate(year, month, dia);
+    // Lista de eventos
     let contenido = []
 
-    events.forEach(event => {
-      if (isSameDate(event.date, currentDate)) {
-        contenido.push(buildEvent(event.contenido));
-      }
-    })
+    if (events) {
+      events.forEach(event => {
+        if (isSameDate(event.date, currentDate)) {
+          contenido.push(event);
+        }
+      })
+    }
 
     timeline.push({
       date: parseDateAsString(year, month, dia),
@@ -45,41 +48,40 @@ export function addEventToTimeline(event, timeline) {
   })
 }
 
-export function moveEvent(from, to, event, timeline) {
-  console.log(`Moving event ${JSON.stringify(event)} from ${from} to ${to}`)
-  return timeline.map(item => {
-    if (!item.contenido) {
-      item.contenido = []
-    }
+// export function moveEvent(from, to, event, timeline) {
+//   console.log(`Moving event ${JSON.stringify(event)} from ${from} to ${to}`)
+//   return timeline.map(item => {
+//     if (!item.contenido) {
+//       item.contenido = []
+//     }
 
-    if (isSameDate(from, item.date)) {
-      for (let i = 0; i < item.contenido.length; i++) {
-        if (item.contenido[i].id === event.id) {
-          item.contenido.splice(i, 1)
-          break
-        }
-      }
-    }
+//     if (isSameDate(from, item.date)) {
+//       for (let i = 0; i < item.contenido.length; i++) {
+//         if (item.contenido[i].id === event.id) {
+//           item.contenido.splice(i, 1)
+//           break
+//         }
+//       }
+//     }
 
-    if (isSameDate(to, item.date) && !hasEvent(item, event)) {
-      console.log(event)
-      item.contenido.push(buildEvent(event))
-    }
+//     if (isSameDate(to, item.date) && !hasEvent(item, event)) {
+//       item.contenido.push(buildEvent(event))
+//     }
 
-    return item
-  })
-}
+//     return item
+//   })
+// }
 
-function buildEvent(contenido) {
-  const id = contenido.id || generateId()
+// function buildEvent(contenido) {
+//   const id = contenido.id || generateId()
 
-  return Object.assign({}, contenido, { id })
-}
+//   return Object.assign({}, contenido, { id })
+// }
 
-function generateId() {
-  return Math.random().toString(36).substring(2, 9);
-}
+// function generateId() {
+//   return Math.random().toString(36).substring(2, 9);
+// }
 
-function hasEvent(item, event) {
-  return !!item.contenido.find(({ id }) => id === event.id)
-}
+// function hasEvent(item, event) {
+//   return !!item.contenido.find(({ id }) => id === event.id)
+// }

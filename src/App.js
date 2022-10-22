@@ -1,31 +1,44 @@
 import './App.css';
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
+import update from 'immutability-helper'
 import TimeLine from './Components/TimeLine';
 import { Select } from './Components/Select';
 import { Agregar } from './Components/Agregar';
-import { addEventToTimeline, buildTimeline, moveEvent } from './utils/timeline.utils';
-import { parseDate } from './utils/date.utils';
-
-const events = [
-  { date: parseDate(2022, 2, 1), contenido: { title: 'Pruebas' } },
-  { date: parseDate(2022, 2, 1), contenido: { title: 'Más pruebas' } },
-  { date: parseDate(2022, 2, 2), contenido: { title: 'Pruebas 2' } }
-]
+import { addEventToTimeline, buildTimeline } from './utils/timeline.utils';
+import { addEvent, findEvents, moveEvent } from './services/timeline.service';
+import { useQuery } from '@tanstack/react-query';
 
 function App() {
   let [timeLine, setTimeLine] = useState([])
-  let [selectAnio, setSelectAnio] = useState("")
-  let [selectMes, setSelectMes] = useState("")
+  let [eventos, setEventos] = useState([])
+  let [selectAnio, setSelectAnio] = useState("2022")
+  let [selectMes, setSelectMes] = useState("2")
   let [start, setStart] = useState("")
   let [isOpen, setIsOpen] = useState(false)
 
   /* -------------------------------------Crea la linea de tiempo------------------------------------- */
   useEffect(() => {
-    console.log('select effect')
-    setTimeLine(buildTimeline(selectAnio, selectMes, events))
+    // findEvents().then(events => setTimeLine(buildTimeline(selectAnio, selectMes, events)))
+    setTimeLine(buildTimeline(selectAnio, selectMes))
   }, [selectAnio, selectMes])
+
+  // const dsa = useQuery(
+  //   ['events'],
+  //   findEvents()
+  // )
+  //   console.log(dsa)
+  useEffect(() => {
+    findEvents().then(setEventos)
+  }, [])
+
+  useEffect(() => {
+    setTimeLine(old => {
+      eventos.forEach(event => old = addEventToTimeline(event, old))
+      return old
+    })
+  }, [eventos])
 
   /* -------------------------------------Agrega el evento al dia------------------------------------- */
 
@@ -35,14 +48,27 @@ function App() {
    * @param {Evento} line Linea con el evento que se acaba de incluir
    */
   function onNewLineAdded(line) {
-    events.push(line)
+    addEvent(line).then(events => setTimeLine(buildTimeline(selectAnio, selectMes, events)))
 
     // setTimeLine(buildTimeline(selectAnio, selectMes, events))
-    setTimeLine(old => addEventToTimeline(line, old))
+    // setTimeLine(old => addEventToTimeline(line, old))
   }
 
-  function onEventMoved(from, to, event) {
-    setTimeLine(old => moveEvent(from, to, event, old))
+  const asd = useCallback(async (to, eventId) => {
+    const events = await moveEvent(to, eventId)
+    //setTimeLine(buildTimeline(selectAnio, selectMes, events))
+    setTimeLine(old => {
+      update(old, {
+        //
+      })
+    })
+  })
+  function onEventMoved(to, eventId) {
+    // const newTimeline = moveEvent(from, to, event, timeLine)
+
+    moveEvent(to, eventId)
+      .then(events => setTimeLine(buildTimeline(selectAnio, selectMes, events)))
+    // setTimeLine(newTimeline)
   }
 
   function mostrar(bool) {
@@ -72,12 +98,12 @@ function App() {
     {selectAnio === "" || selectMes === "" ? <h3>Selecciona mes y año</h3> :
       <div className='scrollmenu'>
         <ul className=''>{
-          timeLine.map((line, index) => (
+          timeLine.map((line) => (
             <TimeLine
               line={line}
               key={line.date}
               onNewLineAdded={onNewLineAdded}
-              onEventMoved={onEventMoved}
+              onEventMoved={asd}
             />
           ))}
         </ul>

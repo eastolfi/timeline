@@ -10,6 +10,10 @@ export function parseDateAsString(year, month, day) {
     return `${day <= 9 ? "0" : ""}${day}/${month <= 9 ? "0" : ""}${month}/${year}`;
 }
 
+export function convertFromDateToString(date) {
+    return parseDateAsString(date.getFullYear(), date.getMonth(), date.getDate())
+}
+
 /**
  * Crea una nueva fecha
  * 
@@ -33,6 +37,22 @@ export function convertFromString(date) {
     return new Date(parseInt(fields[2]), parseInt(fields[1]) - 1, parseInt(fields[0]))
 }
 
+export function getDateAsString(date) {
+    if (isString(date)) {
+        return date
+    } else {
+        return ''
+    }
+}
+
+export function getDate(date) {
+    if (isString(date)) {
+        return convertFromString(date)
+    } else {
+        return date
+    }
+}
+
 /**
  * Comprueba que las dos fechas son las mismas
  * 
@@ -41,10 +61,14 @@ export function convertFromString(date) {
  * @returns Si es la misma fecha o no
  */
 export function isSameDate(first/*Date | string*/, second/*Date | string*/) {
-    const firstDate = (typeof first === 'string') ? convertFromString(first) : first
-    const secondDate = (typeof second === 'string') ? convertFromString(second) : second
+    const firstDate = isString(first) ? convertFromString(first) : first
+    const secondDate = isString(second) ? convertFromString(second) : second
 
     return firstDate.getFullYear() === secondDate.getFullYear() &&
         firstDate.getMonth() === secondDate.getMonth() &&
         firstDate.getDate() === secondDate.getDate();
+}
+
+function isString(value) {
+    return typeof value === 'string'
 }
