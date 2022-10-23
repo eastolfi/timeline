@@ -1,55 +1,68 @@
-import { useState } from "react"
-import { useDrop } from 'react-dnd'
-import { isSameDate } from '../utils/date.utils'
+import { useCallback, useState } from "react"
 import { Agregar } from './Agregar'
 import styles from './TimeLine.module.css'
-import TimelineEvent, { DragTypes } from './TimelineEvent';
+import TimelineEvent from './TimelineEvent';
 
-function TimeLine({ line, onNewLineAdded, onEventMoved }) {
+const style = {
+   width: 400,
+}
+
+function TimeLine({ /*line,*/ onNewLineAdded, onEventMoved, id, text, index, date, moveCard, day: line, cards }) {
+   /**/
+   
+   /**/
    let [isOpen, setIsOpen] = useState(false)
-
-   const [, drop] = useDrop(() => ({
-      accept: DragTypes.Event,
-      drop: ({ date, event }) => {
-         // console.log(`Dropped item ${JSON.stringify(item)} onto ${line.date}`)
-         // onNewLineAdded(item)
-         if (!isSameDate(date, line.date)) {
-            onEventMoved(date, line.date, event)
-         }
-      }
-   }))
 
    function mostrar(bool) {
       return isOpen ? setIsOpen(bool) : setIsOpen(bool)
    }
 
+   const renderCard = useCallback((card, index, day) => {
+      return (
+        // <DragCard
+        //   key={card.id}
+        //   index={index}
+        //   id={card.id}
+        //   text={card.title}
+        //   date={card.date}
+        //   moveCard={moveCard}
+        // />
+        <TimelineEvent
+            // line={line}
+            // key={line.date}
+            // onNewLineAdded={onNewLineAdded}
+            // onEventMoved={asd}
+              key={card.id}
+              index={index}
+              id={card.id}
+              text={card.title}
+              date={card.date}
+              moveCard={moveCard}
+              day={day}
+              event={card}
+            />
+      )
+    }, [])
+
    return (<>
       <li className="t-timeline-i">
-         <button ref={drop} className="t-timeline-b open-modal" onClick={() => (mostrar(true))}>
+         <button className="t-timeline-b open-modal" onClick={() => (mostrar(true))}>
             <h3>{line.date.slice(0,2)}</h3>
          </button>
 
-         <ol className={styles.EventList}>
-         {line.contenido.map((event, i) => <TimelineEvent key={i} event={event} date={line.date} />)}
-            {/* {contenido.map(({ imagenUrl, title, description }, i) => (
-               <li key={i}>
-                  <div className="event-container">
-                     <img src={imagenUrl} alt={title} />
-                     <h2>{title}</h2>
-                     <p>{description}</p>
-                  </div>
-               </li>
-            ))} */}
-         </ol>
+         {/* <ol className={styles.EventList}>
+            {line.contenido.map((event, i) => <TimelineEvent key={i} index={i} event={event} onEventMoved={onEventMoved} />)}
+         </ol> */}
+         <div style={style}>{cards.map((card, i) => renderCard(card, i))}</div>
       </li>
 
-      <Agregar
+      {/* <Agregar
          line={line}
          isOpen={isOpen}
          setIsOpen={setIsOpen}
          onNewLineAdded={onNewLineAdded}
          mostrarF={() => (mostrar(false))}
-      />
+      /> */}
    </>)
 }
 
