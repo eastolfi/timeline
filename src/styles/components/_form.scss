@@ -1,0 +1,94 @@
+::-webkit-input-placeholder {
+  color: $cb1;
+  font-family: $g-font-family;
+  font-size: $g-font-size-sm;
+}
+
+::-moz-placeholder {
+  color: $cb1;
+  font-family: $g-font-family;
+  font-size: $g-font-size-sm;
+}
+
+:-ms-input-placeholder {
+  color: $cb1;
+  font-family: $g-font-family;
+  font-size: $g-font-size-sm;
+}
+
+:-moz-placeholder {
+  color: $cb1;
+  font-family: $g-font-family;
+  font-size: $g-font-size-sm;
+}
+
+.t-form {
+  &-i {
+    border: 0;
+    border: 1px solid $cb1;
+    font-family: $g-font-family;
+    font-size: $g-font-size-sm;
+    line-height: $g-line-height-sm;
+    color: $cb1;
+    outline: none;
+    height: $input-height;
+    width: 100%;
+    transition: .3s;
+    padding: 0 $space-xs;
+    background-color: transparent;
+    color: $cb1;
+    z-index: 1;
+    position: relative;
+    border-radius: 0;
+  }
+
+  &-s {
+    -webkit-appearance:none;
+    -moz-appearance: none;
+    appearance: none;
+    webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s 0.2s ease-in-out;
+    -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s 0.2s ease-in-out;
+    -webkit-transition: border-color ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s 0.2s ease-in-out;
+    transition: border-color ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s 0.2s ease-in-out;
+    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s 0.2s ease-in-out;
+    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s 0.2s ease-in-out, -webkit-box-shadow ease-in-out 0.15s 0.2s ease-in-out;
+    background-image: url("data:image/svg+xml, %3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='%23FFFFFF' viewBox='0 0 24 24'%3E%3Cpath d='M7.406 7.828l4.594 4.594 4.594-4.594 1.406 1.406-6 6-6-6z'%3E%3C/path%3E%3C/svg%3E");
+    background-position: calc(100% - 3px) 50%;
+    background-repeat: no-repeat;
+    background-size: 24px;
+  }
+
+  &-c,
+  &-g-c {
+    margin-bottom: $space-xs;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &--w {
+    ::-webkit-input-placeholder {
+      color: $cb2;
+    }
+    
+    ::-moz-placeholder {
+      color: $cb2;
+    }
+    
+    :-ms-input-placeholder {
+      color: $cb2;
+    }
+    
+    :-moz-placeholder {
+      color: $cb2;
+    }
+
+    .t-form {
+      &-i {
+        border: 1px solid $cb2;
+        color: $cb2;
+      }
+    }
+  }
+}

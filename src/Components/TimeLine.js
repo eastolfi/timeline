@@ -24,10 +24,9 @@ function TimeLine({ line, onNewLineAdded, onEventMoved }) {
    }
 
    return (<>
-   
-      <li className="container" style={{ display: 'flex', flexDirection: 'column' }}>
-         <button ref={drop} className="open-modal" onClick={() => (mostrar(true))}>
-            <h3>{line.date.slice(0,2) }</h3>
+      <li className="t-timeline-i">
+         <button ref={drop} className="t-timeline-b open-modal" onClick={() => (mostrar(true))}>
+            <h3>{line.date.slice(0,2)}</h3>
          </button>
 
          <ol className={styles.EventList}>
@@ -53,4 +52,5 @@ function TimeLine({ line, onNewLineAdded, onEventMoved }) {
       />
    </>)
 }
+
 export default TimeLine

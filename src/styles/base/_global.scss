@@ -1,0 +1,34 @@
+// NOTE: Global styles
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-size: $g-font-size;
+  line-height: $g-line-height;
+  font-family: $g-font-family;
+  color: $g-color;
+  font-weight: 400;
+  overflow-x: hidden;
+  background-color: $cb1;
+
+  &.is-overflow {
+    overflow: hidden;
+  }
+}
+
+.t-tit-t {
+  font-size: 36px;
+  line-height: 115%;
+  font-weight: 600;
+}
+
+.t-sub-t {
+  margin-bottom: $space-xs;
+}
+
+.t-p {
+  font-size: $g-font-size-sm;
+  line-height: $g-line-height-sm;
+  color: $cb3;
+}

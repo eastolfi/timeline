@@ -1,0 +1,38 @@
+.modal {
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100vh;
+  background-color: rgba(0, 0, 0, 0.50);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: var(--black);
+  cursor: pointer;
+  transition: all 0.35s ease-in;
+
+  &.is-open {
+    display: flex;
+  }
+
+  &-container {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+    position: relative;
+    min-width: 320px;
+    min-height: 320px;
+    background-color: #fff;
+    color: #282c34;
+  }
+}
+
+.close-modal {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+}

@@ -1,0 +1,61 @@
+.t-btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: $btn-height;
+  padding: 0 $space-xs;
+  font-size: 16px;
+  line-height: 16px;
+  font-family: $g-font-family;
+  transition: .3s;
+  color: $cb2;
+  background-color: $cp1;
+  border: none;
+  position: relative;
+  cursor: pointer;
+  font-weight: 500;
+
+  &-i {
+    .t-icon {
+      width: $space-xs;
+      height: $space-xs;
+      display: block;
+
+      svg {
+        width: $space-xs;
+        height: $space-xs;
+        display: block;
+      }
+
+      path {
+        fill: $cb2;
+        transition: .3s;
+      }
+    }
+
+    &--l {
+      .t-icon {
+        margin-right: $space-xs;
+      } 
+    }
+
+    &--r {
+      .t-icon {
+        margin-left: $space-xs;
+      } 
+    }
+
+    &:hover {
+      .t-icon {
+        path {
+          fill: $cb1;
+        }
+      }
+    }
+  }
+
+  &:hover {
+    color: $cb1;
+  }
+}

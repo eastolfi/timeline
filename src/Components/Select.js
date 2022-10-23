@@ -29,30 +29,23 @@ export function Select({ setSelectAnio, setSelectMes, selectMes, selectAnio, sta
    }, [anioActual, start])
 
    return (
-      <div className="options">
-         <div>
-            <select value={selectMes} onChange={(e) => (setSelectMes(e.target.value))}>
+      <div className="t-form-c">
+         <div className="t-form-g-c">
+            <select className="t-form-i t-form-s" value={selectMes} onChange={(e) => (setSelectMes(e.target.value))}>
                <option value=''>Selecciona un mes</option>
                {meses.map((mes) => {
                   return <option key={mes.value} value={mes.value}>{mes.text}</option>
                })}
-
             </select>
-
          </div>
-         <div>
-            <div>
-               <select value={selectAnio} onChange={(e) => (setSelectAnio(e.target.value))}>
-                  <option value=''>Selecciona un año</option>
-                  {anios.map((anio) => {
-                     return <option key={anio} value={anio}>{anio}</option>
-                  })}
-
-               </select>
-
-            </div>
+         <div className="t-form-g-c">
+            <select className="t-form-i t-form-s" value={selectAnio} onChange={(e) => (setSelectAnio(e.target.value))}>
+               <option value=''>Selecciona un año</option>
+               {anios.map((anio) => {
+                  return <option key={anio} value={anio}>{anio}</option>
+               })}
+            </select>
          </div>
       </div>
-
    )
 }

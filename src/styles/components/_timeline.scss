@@ -1,0 +1,90 @@
+.t-timeline {
+  margin-top: $space-lg;
+  width: 100vw;
+  left: 50%;
+
+  &-l {
+    width: 100%;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    user-select: none;
+    scrollbar-width: none; // NOTE: Necesario para resetear la barra de scroll en Firefox
+    cursor: grab;
+    transition: all .2s;
+    will-change: transform;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: min-content;
+    grid-template-columns: min-content;
+    //grid-gap: $space-sm;
+
+    @media (min-width: $screen-xs) {
+      //grid-gap: $gap-base;
+    }
+  
+    &.is-active {
+      cursor: grabbing;
+      cursor: -webkit-grabbing;
+    }
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &-i {
+    display: flex;
+    flex-direction: column-reverse;
+    width: 220px;
+    align-items: flex-start;
+
+    ol {
+      padding-left: 0;
+      transform: translate(-8px, 0);
+      margin-bottom: $space-sm;
+      width: calc(100% - #{$space-xs});
+
+      li {
+        background-color: $cb4;
+        margin-bottom: $space-xxs;
+        padding: $space-xxs;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
+  &-b {
+    position: relative;
+    width: 100%;
+    text-align: left;
+
+    &:before {
+      content: '';
+      display: inline-block;
+      background-color: $cb3;
+      height: 1px;
+      left: 0;
+      right: 0;
+      position: absolute;
+      top: 31px;
+    }
+
+    &:after {
+      content: '';
+      display: inline-block;
+      width: $space-xs;
+      height: $space-xs;
+      background-color: $cb2;
+      border-radius: 50%;
+      margin-top: $space-xxs;
+      z-index: 1;
+      position: relative;
+    }
+  }
+}
