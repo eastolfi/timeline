@@ -9,16 +9,16 @@ import { addEventToTimeline, buildTimeline, moveEvent } from './utils/timeline.u
 import { parseDate } from './utils/date.utils';
 
 const events = [
-  { date: parseDate(2022, 2, 1), contenido: { title: 'Pruebas' } },
-  { date: parseDate(2022, 2, 1), contenido: { title: 'Más pruebas' } },
-  { date: parseDate(2022, 2, 2), contenido: { title: 'Pruebas 2' } }
+  { date: parseDate(2022, 2, 1), contenido: { title: 'Prueba 1',imagenUrl:"https://i.pinimg.com/736x/ad/58/d7/ad58d7a7475897fd3fcade3b43572bd5.jpg", description:"Lorem ipsum dolor sit, amet ." } },
+  { date: parseDate(2022, 2, 1), contenido: { title: 'Prueba 2',imagenUrl:"https://i.pinimg.com/474x/f1/0c/3e/f10c3ea27ba159af9f96b94ebec23006.jpg", description:"Lorem ipsum dolor sit, amet ." } },
+  { date: parseDate(2022, 2, 2), contenido: { title: 'Prueba 3',imagenUrl:"https://huescalamagiaenfotos.es/thumbnail.aspx?p_registro=1453&p=1&t=14", description:"Lorem ipsum dolor sit, amet ." } }
 ]
 
 function App() {
   let [timeLine, setTimeLine] = useState([])
-  let [selectAnio, setSelectAnio] = useState("")
-  let [selectMes, setSelectMes] = useState("")
-  let [start, setStart] = useState("")
+  let [selectAnio, setSelectAnio] = useState("2022")
+  let [selectMes, setSelectMes] = useState("02")
+  let [start, setStart] = useState("1989")
   let [isOpen, setIsOpen] = useState(false)
 
   /* -------------------------------------Crea la linea de tiempo------------------------------------- */

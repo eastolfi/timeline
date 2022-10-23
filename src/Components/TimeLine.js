@@ -24,9 +24,10 @@ function TimeLine({ line, onNewLineAdded, onEventMoved }) {
    }
 
    return (<>
+   
       <li className="container" style={{ display: 'flex', flexDirection: 'column' }}>
          <button ref={drop} className="open-modal" onClick={() => (mostrar(true))}>
-            <h3>{line.date}</h3>
+            <h3>{line.date.slice(0,2) }</h3>
          </button>
 
          <ol className={styles.EventList}>
