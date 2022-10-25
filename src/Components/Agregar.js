@@ -1,7 +1,11 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { convertFromString } from '../utils/date.utils'
+import { AppContext } from './provider/AppContext'
 
-export function Agregar({ line, setIsOpen, isOpen, mostrarF, onNewLineAdded }) {
+export function Agregar({ /*line, setIsOpen, isOpen, mostrarF, onNewLineAdded*/ }) {
+   const { useAddEventModal } = useContext(AppContext)
+   const { isOpen, hide } = useAddEventModal()
+
    const isNew = !line?.date
 
    let [fecha, setFecha] = useState(/*line?.date*/"03/02/2022")
@@ -23,15 +27,16 @@ export function Agregar({ line, setIsOpen, isOpen, mostrarF, onNewLineAdded }) {
       setImage("")
       setHeadingText("")
       setDescription("")
-      setIsOpen(false)
+      // setIsOpen(false)
+      hide()
    }
 
    if (isOpen) {
       return (
-         <div className="modal is-open" id="modal1" onClick={mostrarF}>
+         <div className="modal is-open" id="modal1" onClick={() => hide()}>
             <div className="modal-dialog" onClick={(e) => e.stopPropagation()}>
                <div className="formulario modal-container">
-                  <button className="close-modal" aria-label="close modal" onClick={mostrarF} data-close>✕</button>
+                  <button className="close-modal" aria-label="close modal" onClick={() => hide()} data-close>✕</button>
                   
                   {/* Fecha */}
                   {!isNew && <h2>{line.date}</h2>}

@@ -6,6 +6,7 @@ import { addEvent } from './services/timeline.service';
 import { TimelineContainer } from './Components/TimelineContainer';
 import { Header } from './Components/header/Header';
 import { DateSelector } from './Components/date-selector/DateSelector';
+import { AppProvider } from './Components/provider/AppContext';
 
 function App() {
   let [timelineAvailable, setTimelineAvalaible] = useState(false)
@@ -39,20 +40,21 @@ function App() {
  
   return (
     <DndProvider backend={HTML5Backend}>
-      <Header
-        onNewLineAdded={onNewLineAdded} />
-      
-      <div className='t-c'>
-        <DateSelector
-          onDateSelectionChanged={onDateSelectionChanged} />
+      <AppProvider>
+        <Header
+          onNewLineAdded={onNewLineAdded} />
+        
+        <div className='t-c'>
+          <DateSelector
+            onDateSelectionChanged={onDateSelectionChanged} />
 
-        { timelineAvailable ? 
-          <TimelineContainer
-          currentDate={currentDate} /> :
-          
-          <h3>Selecciona mes y año</h3> }
-      </div>
-
+          { timelineAvailable ? 
+            <TimelineContainer
+            currentDate={currentDate} /> :
+            
+            <h3>Selecciona mes y año</h3> }
+        </div>
+      </AppProvider>
     </DndProvider>
   );
 }

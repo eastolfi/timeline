@@ -1,3 +1,5 @@
+import { useContext } from 'react';
+import { AppContext } from './provider/AppContext';
 import TimelineEvent from './TimelineEvent';
 
 const style = {
@@ -5,6 +7,9 @@ const style = {
 }
 
 function TimeLine({ moveCard, day: line, cards }) {
+   const { useAddEventModal } = useContext(AppContext)
+   const { show: showModal, hide: hideModal } = useAddEventModal()
+
    function mostrar(bool) {
       console.log('Modal disabled')
    }
