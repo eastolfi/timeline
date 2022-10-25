@@ -20,7 +20,7 @@ function App() {
   // let [eventos, setEventos] = useState([])
   let [timelineAvailable, setTimelineAvalaible] = useState(false)
   let [currentDate, setCurrentDate] = useState({year: '', month: ''})
-  let [newEvent, setNewEvent] = useState(null)
+  let [, setRefresh] = useState(false)
 
   // let [selectAnio, setSelectAnio] = useState("2022")
   // let [selectMes, setSelectMes] = useState("2")
@@ -60,7 +60,18 @@ function App() {
 
     // setTimeLine(buildTimeline(selectAnio, selectMes, events))
     // setTimeLine(old => addEventToTimeline(line, old))
-    setNewEvent(line)
+    if (line) {
+        addEvent(line).then(() => {
+          setRefresh(old => !old)
+            // console.log(cards)
+            // console.log(events)
+            // setCards(oldEvents => {
+            //     console.log(oldEvents)
+            //     return [...oldEvents]
+            // })
+        })
+    }
+    // setNewEvent(line)
   }
 
   useEffect(() => {
@@ -136,8 +147,7 @@ function App() {
 
         { timelineAvailable ? 
           <TimelineContainer
-          currentDate={currentDate}
-          newEvent={newEvent} /> :
+          currentDate={currentDate} /> :
           
           <h3>Selecciona mes y año</h3> }
       </div>

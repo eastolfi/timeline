@@ -29,7 +29,8 @@ export function addEvent(event) {
 
     findDuplicatedIds()
 
-    return Promise.resolve(events)
+    // return Promise.resolve(events)
+    return Promise.resolve(newEvent)
 }
 
 export function moveEvent(to, eventId) {
@@ -74,7 +75,7 @@ export function moveEvent(to, eventId) {
 }
 
 // Private functions
-function buildEvent(event) {
+export function buildEvent(event) {
     const id = event.id || generateId()
   
     return Object.assign({}, event, { id })

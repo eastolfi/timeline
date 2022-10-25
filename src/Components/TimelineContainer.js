@@ -1,7 +1,7 @@
 // import update from 'immutability-helper'
 import { useCallback, useEffect, useState } from 'react'
-import { addEvent, findEvents } from '../services/timeline.service.js';
-import { isSameDate, parseDateAsString } from '../utils/date.utils.js';
+import { addEvent, buildEvent, findEvents } from '../services/timeline.service.js';
+import { isSameDate, parseDate, parseDateAsString } from '../utils/date.utils.js';
 import { addEventToTimeline, buildTimeline } from '../utils/timeline.utils.js';
 import { DragCard } from './DragCard.js'
 import TimeLine from './TimeLine.js';
@@ -53,14 +53,20 @@ export const TimelineContainer = ({ currentDate, newEvent }) => {
         })
     }, [])
 
-    useEffect(() => {
-        if (newEvent) {
-            addEvent(newEvent).then(events => {
-                console.log(events)
-                setCards(events)
-            })
-        }
-    }, [newEvent])
+    // useEffect(() => {
+    //     console.log(cards)
+    //     // setCards(old => [...old, buildEvent({ date: parseDate(2022, 2, 3), contenido: { title: 'AAA', imagenUrl: 'logo192.png' } })])
+    //     // if (newEvent) {
+    //     //     addEvent(newEvent).then(newEvent => {
+    //     //         console.log(cards)
+    //     //         // console.log(events)
+    //     //         // setCards(oldEvents => {
+    //     //         //     console.log(oldEvents)
+    //     //         //     return [...oldEvents]
+    //     //         // })
+    //     //     })
+    //     // }
+    // }, [newEvent])
     
     const moveCard = useCallback((dragIndex, hoverIndex, dragId, newDate) => {
       setCards((prevCards) => 
