@@ -17,7 +17,7 @@ function TimeLine({ /*line,*/ onNewLineAdded, onEventMoved, id, text, index, dat
       return isOpen ? setIsOpen(bool) : setIsOpen(bool)
    }
 
-   const renderCard = useCallback((card, index, day) => {
+   const renderCard = ((card, index, day) => {
       return (
         // <DragCard
         //   key={card.id}
@@ -42,7 +42,7 @@ function TimeLine({ /*line,*/ onNewLineAdded, onEventMoved, id, text, index, dat
               event={card}
             />
       )
-    }, [])
+    }/*, [moveCard]*/)
 
    return (<>
       <li className="t-timeline-i">
@@ -53,7 +53,7 @@ function TimeLine({ /*line,*/ onNewLineAdded, onEventMoved, id, text, index, dat
          {/* <ol className={styles.EventList}>
             {line.contenido.map((event, i) => <TimelineEvent key={i} index={i} event={event} onEventMoved={onEventMoved} />)}
          </ol> */}
-         <div style={style}>{cards.map((card, i) => renderCard(card, i))}</div>
+         <ul style={style}>{cards.map((card, i) => renderCard(card, i))}</ul>
       </li>
 
       {/* <Agregar

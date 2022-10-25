@@ -6,17 +6,7 @@ export const DragTypes = {
    Event: 'event'
 }
 
-const style = {
-   border: "1px dashed gray",
-   padding: "0.5rem 1rem",
-   marginBottom: ".5rem",
-   backgroundColor: "white",
-   cursor: "move",
-   color: 'black'
- };
-
 export default function TimelineEvent({ event, onEventMoved, /* */ index, id, text, date, moveCard }) {
-   /**/
    const ref = useRef(null);
    const [{ handlerId }, drop] = useDrop({
       accept: DragTypes.Event,
@@ -77,9 +67,8 @@ export default function TimelineEvent({ event, onEventMoved, /* */ index, id, te
          handler: monitor.getHandlerId()
       })
    });
-   const opacity = isDragging ? 0 : 1;
-   drag(drop(ref));
-   /**/
+
+   
 
    // useEffect(() => {
    //    console.log('Creating ' + event.id)
@@ -126,17 +115,13 @@ export default function TimelineEvent({ event, onEventMoved, /* */ index, id, te
 
    const { title, imagenUrl, description } = event.contenido
 
-   // drag(ref)
-   // const updateRef = (r) => {
-      // drag(r);
-      // console.log(r);
-   // }
    drag(drop(ref))
 
+   const opacity = isDragging ? 0 : 1;
    return (
-      <li ref={ref} data-handler-id={handlerId}>
+      <li ref={ref} style={{ opacity }} data-handler-id={handlerId}>
          <div className="event-container">
-            <img src={imagenUrl} alt={title} />
+            <img style={{ width: '100px' }} src={imagenUrl} alt={title} />
             <h2>{title} ({ event.id })</h2>
             <p>{description}</p>
          </div>

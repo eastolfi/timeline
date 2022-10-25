@@ -1,7 +1,8 @@
-import update from 'immutability-helper'
-import { useCallback, useState } from 'react'
+// import update from 'immutability-helper'
+import { useCallback, useEffect, useState } from 'react'
+import { addEvent, findEvents } from '../services/timeline.service.js';
 import { isSameDate, parseDateAsString } from '../utils/date.utils.js';
-import { buildTimeline } from '../utils/timeline.utils.js';
+import { addEventToTimeline, buildTimeline } from '../utils/timeline.utils.js';
 import { DragCard } from './DragCard.js'
 import TimeLine from './TimeLine.js';
 const style = {
@@ -37,9 +38,29 @@ function generateCard() {
 
 const initialCards = Array(10).fill('').map(_ => generateCard())
 
-export const TimelineContainer = () => {
-    const [cards, setCards] = useState(initialCards)
-    const [timeline, setTimeline] = useState(buildTimeline(2022, 2))
+export const TimelineContainer = ({ currentDate, newEvent }) => {
+    const [cards, setCards] = useState([])
+    const [timeline, setTimeline] = useState(null)
+
+    useEffect(() => {
+        setTimeline(buildTimeline(currentDate.year, currentDate.month))
+    }, [ currentDate ])
+
+    useEffect(() => {
+        findEvents().then(events => {
+        // console.log(events)
+            setCards(events)
+        })
+    }, [])
+
+    useEffect(() => {
+        if (newEvent) {
+            addEvent(newEvent).then(events => {
+                console.log(events)
+                setCards(events)
+            })
+        }
+    }, [newEvent])
     
     const moveCard = useCallback((dragIndex, hoverIndex, dragId, newDate) => {
       setCards((prevCards) => 
@@ -84,7 +105,7 @@ export const TimelineContainer = () => {
               cards={cards.filter(card => isSameDate(card.date, day.date))}
             />
       )
-    }, [])
+    }, [moveCard, cards])
     return (
         <div className='t-timeline'>
             <ul className='t-timeline-l'>
