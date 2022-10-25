@@ -4,7 +4,7 @@
  * En algún momento se debería reemplazar por llamadas a una API
  */
 
-import { convertFromDateToString, convertFromString, getDate, isSameDate, parseDate } from '../utils/date.utils'
+import { getDate, isSameDate, parseDate } from '../utils/date.utils'
 
 const events = []
 
